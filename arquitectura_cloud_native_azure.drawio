@@ -1,0 +1,167 @@
+<mxfile host="app.diagrams.net" modified="2026-10-30T20:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="arch-cloud-native" name="1. Arquitectura Cloud y Red">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Contenedor Principal: Suscripción Azure -->
+        <mxCell id="azure_sub" value="Microsoft Azure — Suscripción de Producción (Región: East US 2)" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=15;spacingTop=10;fontStyle=1;fontSize=14;fillColor=#F8FAFC;strokeColor=#0078D4;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="930" height="720" as="geometry" />
+        </mxCell>
+
+        <!-- Usuario / Cliente -->
+        <mxCell id="user_client" value="Usuarios / Clientes&#xa;(Navegador Web / Móvil)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="250" width="140" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Capa Perimetral: Front Door + WAF -->
+        <mxCell id="edge_box" value="Capa de Entrada Global y Seguridad Perimetral" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontStyle=1;fontSize=12;fillColor=#EFF6FF;strokeColor=#3B82F6;" vertex="1" parent="1">
+          <mxGeometry x="230" y="160" width="190" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="front_door" value="Azure Front Door&#xa;+ Azure WAF&#xa;&#xa;(CDN Global, SSL/TLS,&#xa;Anti-DDoS, Reglas OWASP)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontColor=#1E3A8A;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="220" width="150" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- Capa PaaS Frontend & Storage -->
+        <mxCell id="frontend_app" value="Frontend Web App&#xa;Azure App Service&#xa;(PaaS / Autoescalado)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;fontColor=#0C4A6E;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="470" y="160" width="170" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="blob_storage" value="Almacenamiento de Objetos&#xa;Azure Blob Storage&#xa;(Imágenes y Estáticos)&#xa;*Acceso público bloqueado*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#78350F;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="470" y="340" width="170" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- VNet Privada -->
+        <mxCell id="vnet_box" value="Azure Virtual Network (VNet: 10.10.0.0/16) — Aislamiento de Red" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;fontStyle=1;fontSize=13;fillColor=#F0FDF4;strokeColor=#15803D;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="90" width="410" height="460" as="geometry" />
+        </mxCell>
+
+        <!-- Subred Backend -->
+        <mxCell id="subnet_backend" value="Subred Privada Backend (10.10.1.0/24) + NSG" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;fontStyle=1;fontSize=11;fillColor=#DCFCE7;strokeColor=#16A34A;" vertex="1" parent="1">
+          <mxGeometry x="715" y="135" width="360" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="aks_backend" value="Backend APIs / Microservicios&#xa;Azure Container Apps / AKS&#xa;(Contenedores Docker con Autoescalado)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBF7D0;strokeColor=#15803D;fontColor=#14532D;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="740" y="175" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="acr_box" value="Azure Container&#xa;Registry (ACR)&#xa;Imágenes Docker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#475569;fontColor=#0F172A;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="965" y="185" width="95" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Subred de Datos -->
+        <mxCell id="subnet_data" value="Subred Privada de Datos y Enlaces Privados (10.10.2.0/24) + NSG" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;fontStyle=1;fontSize=11;fillColor=#FEF2F2;strokeColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="715" y="340" width="360" height="185" as="geometry" />
+        </mxCell>
+        <mxCell id="private_ep" value="Azure Private Endpoints&#xa;(Private Link + Private DNS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#B91C1C;fontColor=#7F1D1D;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="735" y="380" width="150" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sql_db" value="Base de Datos Relacional&#xa;Azure Database for PostgreSQL&#xa;/ Azure SQL Database&#xa;(Multi-AZ + Backups PITR)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FECACA;strokeColor=#991B1B;fontColor=#7F1D1D;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="910" y="370" width="150" height="135" as="geometry" />
+        </mxCell>
+
+        <!-- Capa Transversal: Seguridad, Monitoreo y DevOps -->
+        <mxCell id="transversal_box" value="Servicios Transversales: Seguridad, Gobernanza, Observabilidad y CI/CD" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;fontStyle=1;fontSize=12;fillColor=#F3E8FF;strokeColor=#7E22CE;" vertex="1" parent="1">
+          <mxGeometry x="230" y="580" width="870" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="entra_kv" value="Microsoft Entra ID&#xa;+ Azure Key Vault&#xa;(Managed Identity, RBAC,&#xa;Secretos y Certificados TLS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9D5FF;strokeColor=#6B21A8;fontColor=#3B0764;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="255" y="620" width="250" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor_box" value="Azure Monitor + Log Analytics&#xa;+ Application Insights&#xa;(Métricas APM, Logs, Alertas y FinOps)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9D5FF;strokeColor=#6B21A8;fontColor=#3B0764;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="540" y="620" width="255" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="cicd_box" value="Azure DevOps / GitHub Actions&#xa;+ Terraform (IaC)&#xa;(Pipelines CI/CD Automatizados)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9D5FF;strokeColor=#6B21A8;fontColor=#3B0764;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="830" y="620" width="245" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Flechas y Conexiones -->
+        <mxCell id="e1" value="HTTPS (TLS 1.3)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1E293B;fontStyle=1;" edge="1" parent="1" source="user_client" target="front_door">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="1. Rutas Web" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0284C7;fontStyle=1;" edge="1" parent="1" source="front_door" target="frontend_app">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="2. Caché Estáticos / CDN" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#D97706;fontStyle=1;" edge="1" parent="1" source="front_door" target="blob_storage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="3. APIs REST (VNet Integration)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#15803D;fontStyle=1;" edge="1" parent="1" source="frontend_app" target="aks_backend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Pull Image" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;dashed=1;strokeColor=#475569;" edge="1" parent="1" source="acr_box" target="aks_backend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="4. Tráfico Privado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#B91C1C;fontStyle=1;" edge="1" parent="1" source="aks_backend" target="private_ep">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="SQL / TCP 5432" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#991B1B;fontStyle=1;" edge="1" parent="1" source="private_ep" target="sql_db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="Private Link / SAS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;dashed=1;strokeColor=#D97706;fontStyle=1;" edge="1" parent="1" source="private_ep" target="blob_storage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="flow-cicd" name="2. Flujo de Datos y Despliegue IaC">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" value="Diagrama 2: Flujo de Peticiones (Runtime) y Pipeline de Automatización (IaC + CI/CD)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2C59;strokeColor=#0F2C59;fontColor=#FFFFFF;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="980" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Bloque A: Flujo de Datos -->
+        <mxCell id="runtime_group" value="A. Flujo de Ejecución y Seguridad de Datos en Tiempo Real" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;fontStyle=1;fontSize=13;fillColor=#F8FAFC;strokeColor=#0284C7;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="980" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="step1" value="1. Cliente solicita Web&#xa;e Imágenes vía HTTPS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="190" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="step2" value="2. Azure Front Door + WAF&#xa;Filtra ataques y sirve&#xa;imágenes desde Blob CDN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="190" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" value="3. Frontend (App Service)&#xa;consume APIs del Backend&#xa;(AKS / Container Apps)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#15803D;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="190" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" value="4. Backend autentica con&#xa;Managed Identity y consulta&#xa;BD por Private Endpoint" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#B91C1C;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="190" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="step1" target="step2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="step2" target="step3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="step3" target="step4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Bloque B: Flujo CI/CD + IaC -->
+        <mxCell id="cicd_group" value="B. Flujo de Despliegue Continuo (CI/CD) e Infraestructura como Código (IaC)" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;fontStyle=1;fontSize=13;fillColor=#FAF5FF;strokeColor=#7E22CE;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="980" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="1. Git Push / Pull Request&#xa;(Código App + Scripts&#xa;Terraform / Bicep)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#7E22CE;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="490" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="2. Pipeline CI (Azure DevOps)&#xa;Pruebas, escaneo seguridad&#xa;y Docker Build -> Push ACR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#7E22CE;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="490" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="3. Etapa IaC (Terraform)&#xa;terraform plan &amp; apply&#xa;(Estado remoto en Blob)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#7E22CE;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="490" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="4. Despliegue CD + Monitoreo&#xa;Rolling Update en AKS/App&#xa;y telemetría en Azure Monitor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#7E22CE;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="490" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fc1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="c1" target="c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="c2" target="c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" edge="1" parent="1" source="c3" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
